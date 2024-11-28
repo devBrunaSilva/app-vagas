@@ -1,51 +1,59 @@
-import React from 'react';
-import { Feather } from '@expo/vector-icons';
-import { 
-    Wrapper,
-    Container, 
-    Header, 
-    HeaderButtonContainer, 
-    ButtonIcon, 
-    ButtonText,
-    ContentContainer,
-    Title,
-    Description
-} from '../Details/styles';
-import Logo from '../../components/Logo';
-import theme from '../../theme';
-import { Button } from '../../components/Button';
+import { Feather } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { Button } from "../../components/Button";
+import Logo from "../../components/Logo";
+import jobsService from "../../services/jobsService";
+import theme from "../../theme";
+import {
+  ButtonIcon,
+  ButtonText,
+  Container,
+  ContentContainer,
+  Description,
+  Header,
+  HeaderButtonContainer,
+  Title,
+  Wrapper,
+} from "../Details/styles";
 
+type JobType = {
+  id: number;
+  titulo: string;
+  descricao: string;
+  dataCadastro: string;
+  empresa: string;
+};
 
-export default function Details({route, navigation }) {
+export default function Details({ route, navigation }) {
+  const { id } = route.params;
+  const [job, setJob] = useState<JobType>({} as JobType);
 
-    const {id} = route.params;
+  useEffect(() => {
+    jobsService.get(id).then((response) => {
+      setJob(response.data.job);
+    });
+  }, []);
 
-    return (
-        <Wrapper>
-            <Header>
-                <HeaderButtonContainer onPress={() => navigation.goBack()}>
-                    <ButtonIcon>
-                        <Feather size={16} name="chevron-left" color={theme.COLORS.BLUE} />
-                    </ButtonIcon>
-                    <ButtonText>
-                        Voltar
-                    </ButtonText>
-                </HeaderButtonContainer>
-                <Logo />
-            </Header>
+  return (
+    <Wrapper>
+      <Header>
+        <HeaderButtonContainer onPress={() => navigation.goBack()}>
+          <ButtonIcon>
+            <Feather size={16} name="chevron-left" color={theme.COLORS.BLUE} />
+          </ButtonIcon>
+          <ButtonText>Voltar</ButtonText>
+        </HeaderButtonContainer>
+        <Logo />
+      </Header>
 
-            <Container>
-                <ContentContainer>
-                    <Title>{JSON.stringify(id)}</Title>
-                    <Description>Com este id é possível ir no endpoint da API buscar o restante da informação.</Description>
-                </ContentContainer>
+      <Container>
+        <ContentContainer>
+          <Title>{job.titulo}</Title>
+          <Description>{job.descricao}</Description>
+        </ContentContainer>
 
-                <Button 
-                    title="Entrar em contato" 
-                    noSpacing={true} 
-                    variant='primary'
-                    />
-            </Container>
-        </Wrapper>
-    );
+        <Button title="Entrar em contato" noSpacing={true} variant="primary" />
+      </Container>
+    </Wrapper>
+  );
 }
