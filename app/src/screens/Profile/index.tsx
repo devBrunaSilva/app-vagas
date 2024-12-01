@@ -14,9 +14,11 @@ import {
   HeaderButtonContainer,
   Wrapper,
 } from "../Profile/styles";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Profile({ navigation }) {
   const insets = useSafeAreaInsets();
+  const { signOut } = useAuth();
 
   return (
     <Wrapper style={{ paddingTop: insets.top }}>
@@ -38,6 +40,13 @@ export default function Profile({ navigation }) {
         </ContentContainer>
 
         <Button title="Salvar informações" noSpacing={true} variant="primary" />
+
+        <Container>
+          <ContentContainer>
+            <Button title="Sair" noSpacing={false} variant="secondary" onPress={signOut}/>
+          </ContentContainer>
+        </Container>
+
       </Container>
     </Wrapper>
   );

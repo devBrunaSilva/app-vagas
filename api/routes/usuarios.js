@@ -11,7 +11,7 @@ router.post('/login', async (req, res) => {
   if(!data || !email || !senha) res.status(404).json({ error: 'User not found' });
 
   const userData = data.find((u) => u.dataValues.email === email && u.dataValues.senha === senha);
-
+  
   if(!userData) res.status(404).json({ error: 'User not found' });
   
   const user = {
