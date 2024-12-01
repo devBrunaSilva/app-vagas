@@ -56,12 +56,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setIsAuthenticated(true)
       }
     } catch (error) {
-      console.error('Erro ao carregar dados do usuário:', error);
+      // console.error('Erro ao carregar dados do usuário:', error);
     }
   };
 
   const signOut = async () => {
     setUser(null);
+    setIsAuthenticated(false);
     try {
       await AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(null));
     } catch (error) {

@@ -13,7 +13,7 @@ import FormScreen from './src/screens/Form';
 import List from './src/screens/List';
 import Login from './src/screens/Login';
 import Profile from './src/screens/Profile';
-import { AuthProvider } from './src/contexts/AuthContext';
+import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import ProtectedRoute from './src/routes/ProtectedRoute';
 
 const Tab = createBottomTabNavigator();
@@ -72,21 +72,34 @@ function Auth() {
   );
 }
 
+function Routes() {
+  const { isAuthenticated } = useAuth();
+
+  return(
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName='Home'
+        screenOptions={{ headerShown: false }}
+      >
+        {isAuthenticated ? (
+          <Stack.Screen name='Auth' component={Auth} />
+        ) : (
+          <>
+            <Stack.Screen name='Login' component={Login} />
+            <Stack.Screen name='FormScreen' component={FormScreen} />
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
+
 export default function App() {
   return (
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <StatusBar style='auto' />
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName='Login'
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen name='Login' component={Login} />
-            <Stack.Screen name='FormScreen' component={FormScreen} />
-            <Stack.Screen name='Auth' component={Auth} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <Routes />        
       </ThemeProvider>
     </AuthProvider>
   );

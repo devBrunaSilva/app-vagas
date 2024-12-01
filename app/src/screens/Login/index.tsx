@@ -18,15 +18,20 @@ import { Button } from '../../components/Button';
 
 export default function Login({ navigation }) {
   const { signIn } = useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
+      setIsLoading(true)
       await signIn(email, password);
       navigation.navigate('Auth', { screen: 'Home' });
     } catch (error) {
       Alert.alert('Erro', error.message);
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -52,6 +57,7 @@ export default function Login({ navigation }) {
           <Button
             title='Entrar'
             noSpacing={true}
+            disabled={isLoading}
             variant='primary'
             onPress={handleLogin}
           />
