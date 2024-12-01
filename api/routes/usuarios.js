@@ -1,6 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const usuarioRepository = require('../repositories/usuarioRepository');
+const { encode } = require('../lib/jwt');
+
+
+router.post('/login', async (req, res) => {
+  const { email, senha } = req.body;
+  const data = await usuarioRepository.findAll();
+
+  if(!data || !email || !senha) res.status(404).json({ error: 'User not found' });
+
+  const userData = data.find((u) => u.dataValues.email === email && u.dataValues.senha === senha);
+
+  if(!userData) res.status(404).json({ error: 'User not found' });
+  
+  const user = {
+    id: userData.dataValues.id,
+    email: userData.dataValues.email,
+    name: userData.dataValues.nome
+  }
+
+  const token = encode(user)
+ 
+  res.json({ usuario: user, token });
+});
 
 // Get all users
 router.get('/', (req, res) => {
