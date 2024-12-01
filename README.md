@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  descrição
+  O projeto Vaga Certa é uma aplicação desenvolvida com React Native e Node.js que tem como objetivo ajudar as pessoas a encontrarem oportunidades de emprego.
 </p>
 
 ---
@@ -14,10 +14,6 @@
   <a href="#colab">Colaboradores</a> •
  <a href="#contribute">Contribua</a>
 </p>
-
-
-### Principais funcionalidades:
-- **Fun**: funcionalidade
 
 <h2 id="started">🚀 Primeiros Passos</h2>
 
