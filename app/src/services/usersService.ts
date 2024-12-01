@@ -11,7 +11,7 @@ async function login(email: string, senha: string) {
 
 async function register(nome: string, email: string, senha: string) {
   try {
-    const response = await api.post('/usuarios/register', {
+    const response = await api.post('/usuarios', {
       nome,
       email,
       senha,

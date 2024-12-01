@@ -1,9 +1,12 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode } from "jwt-decode";
 import usersService from '../services/usersService';
 
 interface User {
   id: string;
   email: string;
+  name: string;
 }
 
 interface AuthContextData {
@@ -21,24 +24,54 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  const TOKEN_KEY = '@vaga_certa_token_key';
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { token, usuario } = await usersService.login(email, password);
+      const { token } = await usersService.login(email, password);
+      const userDataDecoded = jwtDecode(token);
 
-      // Armazenar o token no AsyncStorage
+      setUser(userDataDecoded as User);
+      setIsAuthenticated(true)
 
-      setUser(usuario);
+      try {
+        await AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+      } catch (error) {
+        console.error('Erro ao salvar token:', error);
+      }
     } catch (error) {
       throw new Error(error.message);
     }
   };
 
-  const signOut = () => {
-    setUser(null);
+  const loadUserData = async () => {
+    try {
+      const token = await AsyncStorage.getItem(TOKEN_KEY);
+
+      if (token) {
+        const userDataDecoded = jwtDecode(JSON.parse(token)) as User;
+        setUser(userDataDecoded);
+        setIsAuthenticated(true)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar dados do usuário:', error);
+    }
   };
 
-  const isAuthenticated = !!user;
+  const signOut = async () => {
+    setUser(null);
+    try {
+      await AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(null));
+    } catch (error) {
+      console.error('Erro ao salvar token:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, signIn, signOut, isAuthenticated }}>
