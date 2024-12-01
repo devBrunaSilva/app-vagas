@@ -8,21 +8,24 @@ router.post('/login', async (req, res) => {
   const { email, senha } = req.body;
   const data = await usuarioRepository.findAll();
 
-  if(!data || !email || !senha) res.status(404).json({ error: 'User not found' });
+  if(!data || !email || !senha) {
+    return res.status(404).json({ error: 'User not found' })
+  };
 
   const userData = data.find((u) => u.dataValues.email === email && u.dataValues.senha === senha);
   
-  if(!userData) res.status(404).json({ error: 'User not found' });
+  if(userData) {
+    const user = {
+      id: userData.dataValues.id,
+      email: userData.dataValues.email,
+      name: userData.dataValues.nome
+    }
+    const token = encode(user)
+   
+    return res.json({ token });
+  };
   
-  const user = {
-    id: userData.dataValues.id,
-    email: userData.dataValues.email,
-    name: userData.dataValues.nome
-  }
-
-  const token = encode(user)
- 
-  res.json({ usuario: user, token });
+  return res.status(404).json({ error: 'User not found' })
 });
 
 // Get all users
