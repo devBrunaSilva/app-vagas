@@ -40,9 +40,26 @@ async function get(id) {
   }
 }
 
+async function update(id, 
+  nome: string , email: string, senha: string
+) {
+  try {
+    const response = await api.put(`/usuarios/${id}`, {
+      nome,
+      email,
+      senha,
+    });
+    return response.data;
+    
+  } catch (error) {
+    console.error('Error: ', error);
+  }
+}
+
 export default {
   getAll,
   get,
   login,
   register,
+  update
 };

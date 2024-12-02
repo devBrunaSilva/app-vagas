@@ -18,7 +18,8 @@ router.post('/login', async (req, res) => {
     const user = {
       id: userData.dataValues.id,
       email: userData.dataValues.email,
-      name: userData.dataValues.nome
+      name: userData.dataValues.nome,
+      senha: userData.dataValues.senha
     }
     const token = encode(user)
    
@@ -46,17 +47,28 @@ router.get('/:id', (req, res) => {
 // Create a new user
 router.post('/', (req, res) => {
   const user = usuarioRepository.create(req.body);
+  console.log(user)
   res.json({ user });
 });
 
 // Update a user
-router.put('/:id', (req, res) => {
-  const user = usuarioRepository.update(req.params.id, req.body);
+router.put('/:id', async (req, res) => {
+  const user = await usuarioRepository.update(req.params.id, req.body);
+
   if (user) {
-    res.json({ user });
-  } else {
-    res.status(404).json({ error: 'User not found' });
-  }
+    const userData = {
+      id: user.dataValues.id,
+      email: user.dataValues.email,
+      name: user.dataValues.nome,
+      senha: user.dataValues.senha
+    }
+    const token = encode(userData)
+   
+    return res.json({ token });
+  } 
+  
+  return res.status(404).json({ error: 'User not found' });
+  
 });
 
 // Delete a user
