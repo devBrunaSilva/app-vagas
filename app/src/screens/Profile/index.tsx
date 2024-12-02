@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import Input from "../../components/Input";
 import Logo from "../../components/Logo";
+import { useAuth } from "../../contexts/AuthContext";
 import theme from "../../theme";
 import {
   ButtonIcon,
@@ -14,7 +15,6 @@ import {
   HeaderButtonContainer,
   Wrapper,
 } from "../Profile/styles";
-import { useAuth } from "../../contexts/AuthContext";
 
 export default function Profile({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -39,14 +39,22 @@ export default function Profile({ navigation }) {
           <Input label="Senha" placeholder="digite sua senha" />
         </ContentContainer>
 
-        <Button title="Salvar informações" noSpacing={true} variant="primary" />
+        <Button
+          title="Salvar informações"
+          noSpacing={false}
+          variant="primary"
+        />
 
         <Container>
           <ContentContainer>
-            <Button title="Sair" noSpacing={false} variant="secondary" onPress={signOut}/>
+            <Button
+              title="Sair"
+              noSpacing={false}
+              variant="secondary"
+              onPress={signOut}
+            />
           </ContentContainer>
         </Container>
-
       </Container>
     </Wrapper>
   );

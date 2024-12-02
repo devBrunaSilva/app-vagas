@@ -18,6 +18,8 @@ export const Header = styled.View`
 export const HeaderButtonContainer = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
+  gap: 5px;
+  align-items: center;
   padding: 8px 0;
 `;
 export const ButtonIcon = styled.View``;

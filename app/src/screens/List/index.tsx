@@ -9,51 +9,6 @@ import { Container, ListContainer, TextVagas, Wrapper } from "./styles";
 export default function List() {
   const [jobs, setJobs] = useState([]);
 
-  const DATA = [
-    {
-      id: 1,
-      titulo: "Desenvolvedor Front-end",
-      data_cadastro: "2024-06-21",
-      empresa: "Tech Solutions",
-    },
-    {
-      id: 2,
-      titulo: "Analista de Dados",
-      data_cadastro: "2024-06-18",
-      empresa: "Data Insights",
-    },
-    {
-      id: 3,
-      titulo: "Gerente de Projetos",
-      data_cadastro: "2024-06-15",
-      empresa: "Project Masters",
-    },
-    {
-      id: 4,
-      titulo: "Gerente de Projetos",
-      data_cadastro: "2024-06-15",
-      empresa: "Project Masters",
-    },
-    {
-      id: 5,
-      titulo: "Gerente de Projetos",
-      data_cadastro: "2024-06-15",
-      empresa: "Project Masters",
-    },
-    {
-      id: 6,
-      titulo: "Gerente de Projetos",
-      data_cadastro: "2024-06-15",
-      empresa: "Project Masters",
-    },
-    {
-      id: 7,
-      titulo: "Gerente de Projetos",
-      data_cadastro: "2024-06-15",
-      empresa: "Project Masters",
-    },
-  ];
-
   useEffect(() => {
     jobsService.getAll().then((response) => {
       setJobs(response.data.jobs);
@@ -82,8 +37,7 @@ export default function List() {
             showsVerticalScrollIndicator={true}
             ListEmptyComponent={() => (
               <View>
-                <Text>Você ainda não tem tarefas cadastradas</Text>
-                <Text>Crie tarefas e organize seus itens a fazer.</Text>
+                <Text>Ainda não há nenhuma vaga cadastrada.</Text>
               </View>
             )}
           />

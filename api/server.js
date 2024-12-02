@@ -3,13 +3,15 @@ const bodyParser = require('body-parser');
 const sequelize = require('./config/database');
 const usuariosRoutes = require('./routes/usuarios');
 const vagasRoutes = require('./routes/vagas');
+const seedVagas = require('./seeders/vagasSeeder');
 
 const app = express();
 app.use(bodyParser.json());
 
 // Sincronizar o banco de dados
-sequelize.sync().then(() => {
+sequelize.sync().then(async () => {
   console.log('Database synchronized');
+  await seedVagas();
 }).catch(err => {
   console.error('Unable to synchronize the database:', err);
 });
