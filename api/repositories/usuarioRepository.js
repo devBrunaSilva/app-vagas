@@ -23,16 +23,24 @@ async function remove(id) {
 
 async function update(id, { nome, email, senha }) {
   const usuario = await Usuario.findByPk(id);
-  if (usuario) {
-    usuario.nome = nome;
-    usuario.email = email;
-    usuario.senha = senha;
-    await usuario.save();
-    return usuario;
+  if (!usuario) {
+    throw new Error('Usuário não encontrado');
   }
-  return null;
-}
 
+  if (email && email !== usuario.email) {
+    const emailExists = await Usuario.findOne({ where: { email } });
+    if (emailExists) {
+      throw new Error('Email já cadastrado');
+    }
+  }
+
+  if (nome) usuario.nome = nome;
+  if (email) usuario.email = email;
+  if (senha) usuario.senha = senha;
+
+  await usuario.save();
+  return usuario;
+}
 
 
 module.exports = {
