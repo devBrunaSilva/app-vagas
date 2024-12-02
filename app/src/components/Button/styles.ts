@@ -24,5 +24,6 @@ export const Title = styled.Text<ButtonProps>`
   font-weight: bold;
   line-height: 16px;
   text-align: left;
-  color: ${({ $variant, theme }) => ($variant === "primary" ? theme.COLORS.WHITE : theme.COLORS.BLUE)};
+  color: ${({ $variant, theme }) =>
+    $variant === "primary" ? theme.COLORS.WHITE : theme.COLORS.BLUE};
 `;
