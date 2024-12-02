@@ -1,10 +1,13 @@
 import { Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import Input from "../../components/Input";
 import Logo from "../../components/Logo";
 import { useAuth } from "../../contexts/AuthContext";
+import usersService from "../../services/usersService";
 import theme from "../../theme";
 import {
   ButtonIcon,
@@ -15,8 +18,6 @@ import {
   HeaderButtonContainer,
   Wrapper,
 } from "../Profile/styles";
-import usersService from "../../services/usersService";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Profile({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -30,6 +31,7 @@ export default function Profile({ navigation }) {
     if(user) {
       setNome(user.name)
       setEmail(user.email)
+     
     }
   }, [user])
 
@@ -42,6 +44,7 @@ export default function Profile({ navigation }) {
 
       try {
         await AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+        Alert.alert("Sucesso", "Cadastro atualizado com sucesso!");
       } catch (error) {
         console.error('Erro ao salvar token:', error);
       }
