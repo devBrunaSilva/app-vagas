@@ -1,37 +1,37 @@
-import React, { useState } from 'react';
-import { Alert, Image } from 'react-native';
-import { useAuth } from '../../contexts/AuthContext';
+import React, { useState } from "react";
+import { Alert, Image } from "react-native";
+import { useAuth } from "../../contexts/AuthContext";
 import {
-  Wrapper,
   Container,
   Form,
-  TextContainer,
   TextBlack,
+  TextContainer,
   TextLink,
   TextLinkContainer,
-} from './styles';
+  Wrapper,
+} from "./styles";
 
-import BGTop from '../../assets/BGTop.png';
-import Logo from '../../components/Logo';
-import Input from '../../components/Input';
-import { Button } from '../../components/Button';
+import BGTop from "../../assets/BGTop.png";
+import { Button } from "../../components/Button";
+import Input from "../../components/Input";
+import Logo from "../../components/Logo";
 
 export default function Login({ navigation }) {
   const { signIn } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await signIn(email, password);
-      navigation.navigate('Auth', { screen: 'Home' });
+      navigation.navigate("Auth", { screen: "Home" });
     } catch (error) {
-      Alert.alert('Erro', error.message);
+      Alert.alert("Erro", error.message);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -42,29 +42,29 @@ export default function Login({ navigation }) {
         <Form>
           <Logo />
           <Input
-            label='E-mail'
-            placeholder='Digite seu e-mail'
+            label="E-mail"
+            placeholder="Digite seu e-mail"
             onChangeText={setEmail}
             value={email}
           />
           <Input
-            label='Senha'
-            placeholder='Digite sua senha'
+            label="Senha"
+            placeholder="Digite sua senha"
             onChangeText={setPassword}
             value={password}
             secureTextEntry
           />
           <Button
-            title='Entrar'
-            noSpacing={true}
+            title="Entrar"
+            noSpacing={false}
             disabled={isLoading}
-            variant='primary'
+            variant="primary"
             onPress={handleLogin}
           />
           <TextContainer>
             <TextBlack>Não tem uma conta?</TextBlack>
             <TextLinkContainer
-              onPress={() => navigation.navigate('FormScreen')}
+              onPress={() => navigation.navigate("FormScreen")}
             >
               <TextLink>Crie agora mesmo.</TextLink>
             </TextLinkContainer>

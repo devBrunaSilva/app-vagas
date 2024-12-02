@@ -15,8 +15,8 @@ import {
   HeaderButtonContainer,
   Wrapper,
 } from "../Profile/styles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import usersService from "../../services/usersService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Profile({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -94,10 +94,14 @@ export default function Profile({ navigation }) {
 
         <Container>
           <ContentContainer>
-            <Button title="Sair" noSpacing={false} variant="secondary" onPress={signOut}/>
+            <Button
+              title="Sair"
+              noSpacing={false}
+              variant="secondary"
+              onPress={signOut}
+            />
           </ContentContainer>
         </Container>
-
       </Container>
     </Wrapper>
   );
