@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
+import { Linking } from "react-native";
 import { Button } from "../../components/Button";
 import Logo from "../../components/Logo";
 import jobsService from "../../services/jobsService";
@@ -10,6 +11,7 @@ import {
   Container,
   ContentContainer,
   Description,
+  DetailsText,
   Header,
   HeaderButtonContainer,
   Title,
@@ -21,6 +23,8 @@ type JobType = {
   titulo: string;
   descricao: string;
   dataCadastro: string;
+  telefone: string;
+  status: string;
   empresa: string;
 };
 
@@ -33,6 +37,15 @@ export default function Details({ route, navigation }) {
       setJob(response.data.job);
     });
   }, []);
+
+  const handleContact = () => {
+    const whatsappUrl = `https://wa.me/${job.telefone}`;
+    Linking.openURL(whatsappUrl).catch(() => {
+      alert("Não foi possível abrir o WhatsApp. Verifique se o número está correto ou se o WhatsApp está instalado.");
+    });
+  };
+
+
 
   return (
     <Wrapper>
@@ -49,10 +62,14 @@ export default function Details({ route, navigation }) {
       <Container>
         <ContentContainer>
           <Title>{job.titulo}</Title>
+          <DetailsText>{job.empresa}</DetailsText>
           <Description>{job.descricao}</Description>
+          
         </ContentContainer>
 
-        <Button title="Entrar em contato" noSpacing={true} variant="primary" />
+        {job.status == 'aberto' && (
+          <Button title="Entrar em contato" noSpacing={true} variant="primary" onPress={handleContact}/>
+        )}
       </Container>
     </Wrapper>
   );

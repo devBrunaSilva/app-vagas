@@ -56,6 +56,13 @@ export const Title = styled.Text`
 export const Description = styled.Text`
   font-size: ${({ theme }) => theme.FONT_SIZE.SM}px;
   font-weight: 400;
-  text-align: left;
+  text-align: center;
+  color: ${({ theme }) => theme.COLORS.BLACK};
+`;
+
+export const DetailsText = styled.Text`
+  font-size: ${({ theme }) => theme.FONT_SIZE.MD}px;
+  font-weight: bold;
+  text-align: center;
   color: ${({ theme }) => theme.COLORS.BLACK};
 `;
