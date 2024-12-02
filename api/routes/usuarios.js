@@ -47,7 +47,7 @@ router.get('/:id', (req, res) => {
 // Create a new user
 router.post('/', (req, res) => {
   const user = usuarioRepository.create(req.body);
-  console.log(user)
+
   res.json({ user });
 });
 

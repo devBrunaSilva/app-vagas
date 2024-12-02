@@ -32,7 +32,6 @@ export default function Profile({ navigation }) {
       setEmail(user.email)
     }
   }, [user])
-  console.log(user)
 
   const handleEdit = async () => {
     try {
