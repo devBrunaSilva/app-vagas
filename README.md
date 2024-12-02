@@ -49,7 +49,7 @@ Crie o arquivo .env na pasta `./app` e adicione a variável `EXPO_PUBLIC_API_URL
 
 `.env`
 ```env
-EXPO_PUBLIC_API_URL=http://192.168.15.15:3000
+EXPO_PUBLIC_API_URL=http://{SEUIP}:3000
 ```
 
 Instale as dependências:
